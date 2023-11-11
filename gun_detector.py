@@ -70,13 +70,9 @@ class Detector:
             
             # filter out single detections
             best_results = []
-            for i in range(len(frames)-1):
-                if frames[i+1] == frames[i]+1:
+            for i in range(1, len(frames)-1):
+                if frames[i+1] == frames[i]+1 and frames[i] == frames[i-1]+1:
                     best_results.append(results[i])
-                elif i > 0 and frames[i] == frames[i-1]+1:
-                    best_results.append(results[i])
-            if len(frames) >= 2 and frames[-1] == frames[-2] + 1:
-                best_results.append(results[-1])
         
         # close input stream
         cap.release()
