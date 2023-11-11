@@ -7,9 +7,8 @@ from shutil import copy
 #logging.basicConfig(level=logging.DEBUG)
 
 class Detector:
-    def __init__(self, weightsPath, device='cpu', fps=1):
+    def __init__(self, weightsPath, fps=1):
         self.weightsPath = weightsPath
-        self.device = device
         self.fps = fps
     
     def detect(self, vidpath):
