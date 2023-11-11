@@ -41,7 +41,19 @@ def main():
         * {
             font-family: Cambria;
         }
+        div#loading {
+            width: 35px;
+            height: 35px;
+            display: none;
+            background: url(/static/loading.gif) no-repeat;
+            cursor: wait;
+        }
     </style>
+    <script type="text/javascript">
+        function loading() {
+            document.getElementById("loading").style.display = "block";
+        }
+    </script>
     </head>"""
     html = ""
     if filename != None:
@@ -76,8 +88,8 @@ def main():
     <form method="post" enctype="multipart/form-data" action="{url_for('upload')}">
         <label for="file"> Загрузить видео </label> <br>
         <input type="file" id="file" name="file" accept="video/mp4, video/avi" required> <br><br>
-        <input type="submit" value="Отправить">
-    </form>
+        <input type="submit" value="Отправить" onclick="loading();">
+    </form><div id="loading" style="display:none"></div>
     """ + html
 
 '''@app.route("/api/search")
@@ -185,3 +197,7 @@ def uploaded_file(filename):
 def results_file(filename):
     return send_from_directory(RESULTS_FOLDER,
                                filename)
+
+@app.route('/static/<path:path>')
+def send_report(path):
+    return send_from_directory('static', path)

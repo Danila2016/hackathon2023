@@ -29,7 +29,6 @@ class Detector:
         i = 0
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            print(tmpdir)
             i_frame = 0
             while True:
                 i_frame += 1
