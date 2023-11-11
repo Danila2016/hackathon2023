@@ -1,0 +1,9 @@
+path: ../data/yolo
+train: train
+val: train
+test: test
+
+nc: 1
+
+names:
+  0: pistol
