@@ -45,7 +45,7 @@ class Detector:
                 i += 1
 
             tmpfile = tmpdir + '/results.txt'
-            #tmpfile = "results.txt"
+            
             ret = os.system(f"python detect.py --source {tmpdir} --weights {self.weightsPath} --img 640 --project mydata/results --name {id} > {tmpfile} 2>&1 ")
 
             if ret != 0:
@@ -54,17 +54,31 @@ class Detector:
             copy(tmpfile, results_dir + "/result.txt")
 
             results = []
+            frames = []
             with open(tmpfile, encoding='utf-8') as f:
+                i_frame = 0
                 for line in f:
                     if line.startswith("image "):
+                        i_frame += 1
                         path = line.split()[2][:-1]
                         if "(no detections)" in line:
                             os.remove(results_dir + os.path.basename(path))
                         else:
                             path = line.split()[2][:-1]
                             results.append(id + "/" + os.path.basename(path))
-
+                            frames.append(i_frame)
+            
+            # filter out single detections
+            best_results = []
+            for i in range(len(frames)-1):
+                if frames[i+1] == frames[i]+1:
+                    best_results.append(results[i])
+                elif i > 0 and frames[i] == frames[i-1]+1:
+                    best_results.append(results[i])
+            if len(frames) >= 2 and frames[-1] == frames[-2] + 1:
+                best_results.append(results[-1])
+        
         # close input stream
         cap.release()
 
-        return results
+        return best_results
