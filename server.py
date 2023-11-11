@@ -19,10 +19,10 @@ RESULTS_FOLDER = 'mydata/results'
 app = Flask(__name__)
 
 if not os.path.exists(UPLOAD_FOLDER):
-    os.mkdir(UPLOAD_FOLDER)
+    os.makedirs(UPLOAD_FOLDER)
 
 if not os.path.exists(RESULTS_FOLDER):
-    os.mkdir(RESULTS_FOLDER)
+    os.makedirs(RESULTS_FOLDER)
 
 
 arguments = {'weightsPath': "runs/train/exp12/weights/best.pt",

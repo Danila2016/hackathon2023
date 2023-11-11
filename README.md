@@ -1,4 +1,15 @@
 <div align="center">
+<p>
+  В данном репозитории находится код решения по видеодетекции вооружённых людей команды Quick Eye.
+  Основные файлы проекта - server.py (веб-сервер) и gun_detector.py (детектор оружия).
+  Остальные файлы относятся к прокету yolov5.
+  
+  Зависимости Питона указаны в файле requirements.txt.
+  Для запуска кода на GPU необходимо установить пакеты torch и torchvision в соответствии с установленной версией CUDA.
+</p>
+</div>
+
+<div align="center">
   <p>
     <a href="https://yolovision.ultralytics.com/" target="_blank">
       <img width="100%" src="https://raw.githubusercontent.com/ultralytics/assets/main/im/banner-yolo-vision-2023.png"></a>
