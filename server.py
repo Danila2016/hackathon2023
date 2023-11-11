@@ -1,5 +1,7 @@
 import os
 import random
+from datetime import datetime
+
 import string
 import logging
 from base64 import b64decode
@@ -7,6 +9,9 @@ from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from gun_detector import Detector
 #from errors import *
+
+import logging
+logging.basicConfig(filename='flask.log',level=logging.INFO)
 
 UPLOAD_FOLDER = 'mydata/uploads'
 ALLOWED_EXTENSIONS = set(['mp4', 'avi'])
@@ -54,6 +59,7 @@ def main():
                     html += "<h1> Лицо не найдено </h1>"
                 else:
                     html += "<h1> Возникла неизвестная ошибка: " + str(exc) + "</h1>"
+                    app.logger.info("Unknown error: %s", str(exc))
         else:
             results = []
         
@@ -61,8 +67,10 @@ def main():
             for i, path in enumerate(results):
                 url = url_for('results_file', filename=path)
                 html += "<img src='{}' height='600'></img><br>".format(url)
+            app.logger.info("Found %d guns", len(results))
         elif results == [] and not error:
             html += "<h2> Признаков наличия оружия не найдено. </h2>"
+            app.logger.info("Guns not found")
             
     return head + f"""
     <form method="post" enctype="multipart/form-data" action="{url_for('upload')}">
@@ -115,7 +123,8 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 def random_word(length):
-   return ''.join(random.choices(string.ascii_lowercase, k=length))
+   r = random.Random(datetime.now().timestamp())
+   return ''.join(r.choices(string.ascii_lowercase, k=length))
 
 @app.route("/api/upload", methods=['post'])
 def upload():
@@ -128,6 +137,7 @@ def upload():
     if file.filename == '':
         raise(RuntimeError('No selected file'))
     if file and allowed_file(file.filename):
+        app.logger.info("File uploaded: %s", file.filename)
         ext = file.filename.rsplit('.', 1)[1]
         filename = None
         while filename == None or os.path.exists(filename):

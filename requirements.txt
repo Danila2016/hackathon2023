@@ -5,7 +5,8 @@
 gitpython>=3.1.30
 matplotlib>=3.3
 numpy>=1.22.2
-opencv-python>=4.1.1
+#opencv-python>=4.1.1
+opencv-python-headless==4.8.1.78
 Pillow>=10.0.1
 psutil  # system resources
 PyYAML>=5.3.1
@@ -47,3 +48,6 @@ setuptools>=65.5.1 # Snyk vulnerability fix
 # mss  # screenshots
 # albumentations>=1.0.3
 # pycocotools>=2.0.6  # COCO mAP
+
+# Web -------------------------------------------------------------------------
+Flask==3.0.0
