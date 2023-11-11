@@ -201,3 +201,6 @@ def results_file(filename):
 @app.route('/static/<path:path>')
 def send_report(path):
     return send_from_directory('static', path)
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=25169, threaded=True)

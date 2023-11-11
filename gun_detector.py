@@ -47,7 +47,7 @@ class Detector:
 
             tmpfile = tmpdir + '/results.txt'
             #tmpfile = "results.txt"
-            ret = os.system(f"python detect.py --source {tmpdir} --weights {self.weightsPath} --img 640 --device cpu --project mydata/results --name {id} > {tmpfile} 2>&1 ")
+            ret = os.system(f"python detect.py --source {tmpdir} --weights {self.weightsPath} --img 640 --project mydata/results --name {id} > {tmpfile} 2>&1 ")
 
             if ret != 0:
                 raise Exception("Внутренняя ошибка")
